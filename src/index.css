@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --white: #fff;
+}
+
+* {
+  font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (min-width: 640px) {
+  .posts img {
+    max-width: 200px;
+  }
+}
+
+.post {
+  transition: 0.2s;
+}
+
+.register {
+  background-color: rgb(249 250 251);
+}
+
+.ql-editor {
+  min-height: 100px;
+}
+
+article h2 {
+  color: rgb(15, 23, 42);
+  font-weight: 700;
+  font-size: 1.5em;
+  margin-top: 2em;
+  margin-bottom: 0.6666666666666666em;
+  line-height: 1.3333333;
+}
+
+article h3 {
+  color: rgb(15, 23, 42);
+  font-weight: 700;
+  font-size: 1.3em;
+  margin-top: 1em;
+  margin-bottom: 0.333em;
+  line-height: 1.3333333;
+}
+
+article p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  line-height: 28px;
+}
+
+.post-cat {
+  background-color: #00b54b;
+  color: var(--white);
+  padding: 0 6px;
+  font-size: 12px;
+  border-radius: 2px;
+  transition: 0.2s;
+  margin-bottom: 10px;
+}
+
+.post-cat:hover {
+  background-color: #00963e;
+  color: var(--white);
+}
+
+.swiper-button-prev {
+  left: 105px;
+  color: var(--white);
+  font-weight: bold;
+}
+
+.swiper-button-next {
+  right: 105px;
+  color: var(--white);
+  font-weight: bold;
+}
+
+.post-bg {
+  height: 500px;
+  background-repeat: no-repeat;
+  background-position: center top;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.set-darker-bg {
+  transition: 0.2s;
+}
+
+.set-darker-bg:after {
+  content: "";
+  transition: 0.2s;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 65%;
+  transition: opacity 0.2s;
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 0, 0, 0.25)
+  );
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.post-bg h2 {
+  line-height: 3.5rem;
+}
+
+@media (max-width: 640px) {
+  .post-bg {
+    height: 220px;
+  }
+
+  .post-bg h2 {
+    line-height: 1.7rem;
+  }
+
+  .swiper-button-prev {
+    left: 25px;
+  }
+
+  .swiper-button-next {
+    right: 25px;
+  }
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    font-size: 1.5rem;
+  }
+}
