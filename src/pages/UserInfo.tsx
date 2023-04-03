@@ -1,7 +1,8 @@
+/* eslint-disable no-restricted-globals */
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/authContext"; 
-import { Link, useLocation } from "react-router-dom";
-import { UserIcon } from "@heroicons/react/24/outline";
+import { AuthContext } from "../context/authContext";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { PencilIcon, TrashIcon, UserIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import moment from "moment";
 
@@ -23,23 +24,24 @@ export interface UserProps {
   id: number;
 }
 
-export const UserInfo = () => { 
+export const UserInfo = () => {
   const [posts, setPosts] = useState<PostSingle[]>([]);
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, logout } = useContext(AuthContext);
   const location = useLocation();
 
   const userId = location.pathname.split("/")[2];
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchPosts = async () => {
       try {
-        const res = await axios.get(`/users/${userId}`); 
+        const res = await axios.get(`/users/${userId}`);
         setPosts(res.data);
       } catch (err) {
         console.log(err);
       }
     };
-    fetchData();
+    fetchPosts();
   }, [userId]);
 
   const getText = (html: string) => {
@@ -47,21 +49,61 @@ export const UserInfo = () => {
     return doc.body.textContent;
   };
 
+  const handleDelete = async () => {
+    let text =
+      "This action will delete your account and your posts. Are you sure?";
+    if (confirm(text) === true) {
+      try {
+        await axios.delete(`/users/${userId}`);
+        logout();
+        navigate("/");
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
   return (
     <>
       <div className="bg-gray-800">
         <div className="max-w-6xl mx-auto flex flex-col gap-5 sm:gap-8 text-white p-8">
-          <div className="border-4 w-max h-max p-2 rounded-full border-slate-100">
-            {/* <img
-              src={`/upload/${user?.image}`}
-              className="rounded-md object-cover w-24 h-24 max-w-max"
-              alt={user?.username}
-              title={user?.username}
-            /> */}
-            <UserIcon className="w-12 h-12 sm:w-24 sm:h-24" />
+          <div className="border-4 w-max h-max p-0 rounded-full border-slate-100">
+            {posts[0]?.image !== null ? (
+              <img
+                src={`/upload/${posts[0]?.image}`}
+                className="rounded-full object-cover w-12 h-12 sm:w-28 sm:h-28"
+                alt="avatar"
+                title="avatar"
+              />
+            ) : (
+              <UserIcon className="p-2 w-12 h-12 sm:w-24 sm:h-24" />
+            )}
           </div>
           <div className="">
-            <p className="uppercase tracking-wide mb-2 text-[0.8rem]">Author</p>
+            <div className="flex items-center gap-3">
+              <p className="uppercase tracking-wide mb-2 text-[0.8rem]">
+                Author
+              </p>
+              <div className="flex items-center font-medium whitespace-nowrap gap-2 mb-2">
+                {currentUser?.username && (
+                  <div className="flex items-center gap-2">
+                    <Link
+                      to={`/user?edit=${userId}`}
+                      state={posts}
+                      title="Edit an article"
+                      className="flex items-center justify-center text-white rounded-full bg-blue-600 h-6 w-6 focus:ring-offset-gray-800 focus:ring-white"
+                    >
+                      <PencilIcon className="h-3 w-3" />
+                    </Link>
+                    <TrashIcon
+                      title="Delete an article"
+                      onClick={handleDelete}
+                      className="flex items-center justify-center text-white rounded-full bg-red-600 h-6 w-6 p-1 cursor-pointer focus:ring-offset-gray-800 focus:ring-white"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
             <h1 className="font-bold text-4xl drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)] pb-4">
               {posts[0]?.username}
             </h1>
@@ -79,7 +121,9 @@ export const UserInfo = () => {
       </div>
       <div className="max-w-6xl mx-auto min-h-screen pt-10 px-4">
         <div className="home text-center">
-          <h2 className="font-bold text-4xl drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)] pb-5 pl-3 text-left">List of {posts[0]?.username} articles</h2>
+          <h2 className="font-bold text-4xl drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)] pb-5 pl-3 text-left">
+            List of {posts[0]?.username} articles
+          </h2>
           <div className="posts">
             {posts &&
               posts
@@ -91,7 +135,7 @@ export const UserInfo = () => {
                     <Link to={`/post/${post.id}`}>
                       <div className="flex gap-3 sm:gap-5 flex-col sm:flex-row">
                         <img
-                          src={`/upload/${post.img}`}
+                          src={`/upload/${post?.img}`}
                           className="rounded object-cover w-full h-36"
                           alt=""
                         />

@@ -30,7 +30,7 @@ export const Sidebar = ({ bio }: Partial<PropsSingle>) => {
               <>
                 <img
                   src={`/upload/${post?.image}`}
-                  className="w-16 h-16 rounded-md object-cover shadow-lg hover:shadow-transparent"
+                  className="w-16 h-16 rounded-full object-cover shadow-lg hover:shadow-transparent"
                   alt={`${post?.title} cover`}
                   title={`${post?.title} cover`}
                 />
@@ -42,7 +42,7 @@ export const Sidebar = ({ bio }: Partial<PropsSingle>) => {
             )}
           </Link>
           <h4 className="uppercase tracking-wide py-3">About the author</h4>
-          <p>{post?.bio.slice(0, 50)}...</p>
+          <p>{post?.bio.slice(0, 70)}...</p>
           <Link
             className="flex text-sm text-sky-500 font-medium"
             to={`/user/${post?.uid}`}

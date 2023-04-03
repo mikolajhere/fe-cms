@@ -60,35 +60,36 @@ const Home = () => {
         navigation
         scrollbar={{ draggable: true }}
       >
-        {posts.map((post: PropsSingle) => (
-          <SwiperSlide key={post.id}>
-            <div
-              className="post-bg"
-              style={{
-                backgroundImage: `linear-gradient(rgb(40 40 40 / 45%), rgb(40 40 40 / 85%)), url('/upload/${post.img}')`,
-              }}
-            >
-              <Link
-                to={`/?cat=${post?.cat}`}
-                className="bg bg-violet-700 hover:bg-violet-800 rounded text-xs py-0 px-2 mb-3 sm:mb-1 font-medium"
+        {posts.length >= 3 &&
+          posts.map((post: PropsSingle) => (
+            <SwiperSlide key={post.id}>
+              <div
+                className="post-bg"
+                style={{
+                  backgroundImage: `linear-gradient(rgb(40 40 40 / 45%), rgb(40 40 40 / 85%)), url('/upload/${post?.img}')`,
+                }}
               >
-                {`${post?.cat.charAt(0).toUpperCase()}${post?.cat.slice(1)}`}
-              </Link>
-              <span className="text-sm my-3 hidden sm:block">
-                {moment(post?.date).format("MMMM DD, YYYY")}
-              </span>
-              <Link to={`/post/${post.id}`}>
-                <h2 className="text-xl px-12 sm:text-3xl sm:px-5 lg:text-5xl text-center font-bold drop-shadow-[0_3px_1px_rgba(0,0,0,0.4)] max-w-lg text-white">
-                  {post.title}
-                </h2>
-              </Link>
-            </div>
-          </SwiperSlide>
-        ))}
+                <Link
+                  to={`/?cat=${post?.cat}`}
+                  className="bg bg-violet-700 hover:bg-violet-800 rounded text-xs py-0 px-2 mb-3 sm:mb-1 font-medium"
+                >
+                  {`${post?.cat.charAt(0).toUpperCase()}${post?.cat.slice(1)}`}
+                </Link>
+                <span className="text-sm my-3 hidden sm:block">
+                  {moment(post?.date).format("MMMM DD, YYYY")}
+                </span>
+                <Link to={`/post/${post.id}`}>
+                  <h2 className="text-xl px-12 sm:text-3xl sm:px-5 lg:text-5xl text-center font-bold drop-shadow-[0_3px_1px_rgba(0,0,0,0.4)] max-w-lg text-white">
+                    {post.title}
+                  </h2>
+                </Link>
+              </div>
+            </SwiperSlide>
+          ))}
       </Swiper>
 
       {cat && cat !== "" ? (
-        <h1 className="my-5 text-3xl sm:text-4xl tracking-tight text-slate-900 font-extrabold text-center">
+        <h1 className="my-5 text-3xl sm:text-4xl tracking-tight text-slate-900 font-extrabold text-center px-4">
           {posts?.length && cat !== "" ? (
             <>Posts in {cat.slice(5)} category</>
           ) : (
@@ -96,7 +97,7 @@ const Home = () => {
           )}
         </h1>
       ) : (
-        <h2 className="my-5 text-3xl sm:text-4xl tracking-tight text-slate-900 font-extrabold text-center">
+        <h2 className="my-5 text-3xl sm:text-4xl tracking-tight text-slate-900 font-extrabold text-center px-4">
           All posts
         </h2>
       )}
@@ -111,7 +112,7 @@ const Home = () => {
                 <Link to={`/post/${post.id}`}>
                   <div className="flex gap-3 sm:gap-5 flex-col sm:flex-row">
                     <img
-                      src={`/upload/${post.img}`}
+                      src={`/upload/${post?.img}`}
                       className="rounded object-cover w-full h-36"
                       alt=""
                     />

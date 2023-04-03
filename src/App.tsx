@@ -44,9 +44,9 @@ const router = createBrowserRouter([
         element: <Write />,
       },
       {
-        path: "/config/:id",
+        path: "/user",
         element: <User />,
-      },
+      }, 
     ],
   },
   {

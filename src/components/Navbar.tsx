@@ -4,8 +4,8 @@ import { AuthContext } from "../context/authContext";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
-  Bars3Icon, 
-  LightBulbIcon, 
+  Bars3Icon,
+  LightBulbIcon,
   PencilSquareIcon,
   UserIcon,
   XMarkIcon,
@@ -34,6 +34,8 @@ export const Navbar = () => {
     navigate("/");
   };
 
+  console.log({ currentUser });
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -41,7 +43,6 @@ export const Navbar = () => {
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button*/}
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
@@ -96,23 +97,12 @@ export const Navbar = () => {
                     </Link>
                   </button>
                 )}
-                {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                      {currentUser?.image != null ? (
-                        <>
-                          <img
-                            src={`/upload/${currentUser?.image}`}
-                            alt=""
-                            className="w-8 h-8 rounded-full object-cover"
-                          />
-                        </>
-                      ) : (
-                        <span className="flex items-center justify-center text-white rounded-full bg-teal-800 h-6 w-6">
-                          <UserIcon className="h-5 w-5" aria-hidden="true" />
-                        </span>
-                      )}
+                      <span className="flex items-center justify-center text-white rounded-full bg-teal-800 h-6 w-6">
+                        <UserIcon className="h-5 w-5" aria-hidden="true" />
+                      </span>
                     </Menu.Button>
                   </div>
                   <Transition
@@ -125,59 +115,63 @@ export const Navbar = () => {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {currentUser?.username
-                          ? ({ active }) => (
-                              <span
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
-                                )}
-                              >
-                                Hello, {currentUser?.username}
-                              </span>
-                            )
-                          : ({ active }) => <span></span>}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {currentUser?.username
-                          ? ({ active }) => (
-                              <Link
-                                to={`/user/${currentUser?.id}`}
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Your Profile
-                              </Link>
-                            )
-                          : ({ active }) => <span></span>}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {currentUser
-                          ? ({ active }) => (
-                              <span
-                                onClick={handleSignOut}
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
-                                )}
-                              >
-                                Sign out
-                              </span>
-                            )
-                          : ({ active }) => (
-                              <Link
-                                to="/login"
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Login
-                              </Link>
+                      <>
+                        {currentUser?.username ? (
+                          <span
+                            className={classNames(
+                              "block px-4 py-2 text-sm font-bold text-gray-700 border-b-2"
                             )}
+                          >
+                            Hello, {currentUser?.username}!
+                          </span>
+                        ) : (
+                          <span></span>
+                        )}
+                      </>
+                      <Menu.Item>
+                        {currentUser?.username ? (
+                          <Link
+                            to={`/user/${currentUser?.id}`}
+                            className={classNames(
+                              "block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100"
+                            )}
+                          >
+                            Your Profile
+                          </Link>
+                        ) : (
+                          <span></span>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {currentUser ? (
+                          <span
+                            onClick={handleSignOut}
+                            className={classNames(
+                              "block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-slate-100"
+                            )}
+                          >
+                            Sign out
+                          </span>
+                        ) : (
+                          <>
+                            <Link
+                              to="/register"
+                              className={classNames(
+                                "block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100"
+                              )}
+                            >
+                              Register
+                            </Link>
+                            <Link
+                              to="/login"
+                              className={classNames(
+                                "block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100"
+                              )}
+                            >
+                              Login
+                            </Link>
+                          </>
+                        )}
                       </Menu.Item>
                     </Menu.Items>
                   </Transition>
