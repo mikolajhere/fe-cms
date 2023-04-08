@@ -1,15 +1,16 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-import Write from "./pages/Write";
 import Single from "./pages/Single";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import ScrollToTop from "./components/ScrollToTop";
 import { UserInfo } from "./pages/UserInfo";
 import { User } from "./pages/User";
 import "./index.css";
+import { ScrollToTop } from "./components/ScrollToTop";
+import { Home } from "./pages/Home";
+import { Write } from "./pages/Write";
+import { Register } from "./pages/Register";
+import { Login } from "./pages/Login";
+import { Footer } from "./components/Footer";
+import { ToastContainer } from "react-toastify";
 
 const Layout = () => {
   return (
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
       {
         path: "/user",
         element: <User />,
-      }, 
+      },
     ],
   },
   {
@@ -59,7 +60,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-function App() {
+export const App = () => {
   return (
     <div className="app">
       <div className="min-h-screen mx-auto">
@@ -67,6 +68,4 @@ function App() {
       </div>
     </div>
   );
-}
-
-export default App;
+};

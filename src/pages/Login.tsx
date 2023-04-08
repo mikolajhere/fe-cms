@@ -7,7 +7,7 @@ interface Props {
   password: string;
 }
 
-const Login = () => {
+export const Login = () => {
   const [inputs, setInputs] = useState<Props>({
     username: "",
     password: "",
@@ -38,8 +38,7 @@ const Login = () => {
         <h1 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
           Login
         </h1>
-        <form
-          action=""
+        <form 
           className="flex flex-col gap-4 bg-white shadow my-8 p-8 sm:px-16 rounded max-w-md w-full"
         >
           <div>
@@ -93,5 +92,4 @@ const Login = () => {
     </>
   );
 };
-
-export default Login;
+ 

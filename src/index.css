@@ -71,15 +71,15 @@ article p {
 }
 
 .swiper-button-prev {
-  left: 105px;
-  color: var(--white);
-  font-weight: bold;
+  left: 105px !important;
+  color: var(--white) !important;
+  font-weight: bold !important;
 }
 
 .swiper-button-next {
-  right: 105px;
-  color: var(--white);
-  font-weight: bold;
+  right: 105px !important;
+  color: var(--white) !important;
+  font-weight: bold !important;
 }
 
 .post-bg {
@@ -133,14 +133,18 @@ article p {
   }
 
   .swiper-button-prev {
-    left: 25px;
+    left: 25px !important;
   }
 
   .swiper-button-next {
-    right: 25px;
+    right: 25px !important;
   }
   .swiper-button-next:after,
   .swiper-button-prev:after {
-    font-size: 1.5rem;
+    font-size: 1.5rem !important;
   }
+}
+
+.Toastify { 
+  font-size: 16px;
 }

@@ -34,8 +34,6 @@ export const Navbar = () => {
     navigate("/");
   };
 
-  console.log({ currentUser });
-
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (

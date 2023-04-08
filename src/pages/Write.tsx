@@ -5,12 +5,13 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { PhotoIcon } from "@heroicons/react/24/outline";
+import { toast } from "react-toastify";
 
 interface FileProp {
   file?: File | null;
 }
 
-const Write = () => {
+export const Write = () => {
   const state = useLocation().state;
   const [title, setTitle] = useState(state?.title || "");
   const [value, setValue] = useState(state?.desc || "");
@@ -23,8 +24,10 @@ const Write = () => {
   const upload = async () => {
     try {
       const formData = new FormData();
-      formData.append("file", file as string);
-      const res = await axios.post("/upload", formData);
+      if (file) {
+        formData.append("file", file as string);
+      }
+      const res = await axios.post("/api/upload", formData);
       return res.data;
     } catch (err: any) {
       console.log(err);
@@ -36,16 +39,16 @@ const Write = () => {
     e.preventDefault();
     const imgUrl = await upload();
 
-    let currentId = window.location.href.slice(33);
+    let currentId = window.location.href.slice(49);
     try {
       state
-        ? await axios.put(`/posts/${currentId}`, {
+        ? await axios.put(`/api/posts/${currentId}`, {
             title,
             desc: value,
             cat,
             img: file ? imgUrl : "",
           })
-        : await axios.post(`/posts/`, {
+        : await axios.post(`/api/posts/`, {
             title,
             desc: value,
             cat,
@@ -53,15 +56,19 @@ const Write = () => {
             date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
           });
       navigate("/");
+      toast.success("Post saved successfully!");
     } catch (err: any) {
       setError(err.response.data);
+      toast.error(err.response.data);
     }
   };
 
   console.log({ state });
+  console.log({ file });
+  
 
   return (
-    <div className="max-w-xl mx-auto px-4 text-left mt-4">
+    <div className="max-w-xl mx-auto px-4 text-left mt-4 min-h-screen">
       <div className="mb-6">
         <label
           htmlFor="title"
@@ -113,7 +120,7 @@ const Write = () => {
                   className="relative text-center cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                 >
                   <span className="text-center">Upload a file</span>
-                  
+
                   <input
                     id="file-upload"
                     name="file-upload"
@@ -260,5 +267,3 @@ const Write = () => {
     </div>
   );
 };
-
-export default Write;

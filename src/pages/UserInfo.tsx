@@ -3,6 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/authContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { PencilIcon, TrashIcon, UserIcon } from "@heroicons/react/24/outline";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import moment from "moment";
 
@@ -35,7 +37,7 @@ export const UserInfo = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get(`/users/${userId}`);
+        const res = await axios.get(`/api/users/${userId}`);
         setPosts(res.data);
       } catch (err) {
         console.log(err);
@@ -54,8 +56,9 @@ export const UserInfo = () => {
       "This action will delete your account and your posts. Are you sure?";
     if (confirm(text) === true) {
       try {
-        await axios.delete(`/users/${userId}`);
+        await axios.delete(`/api/users/${userId}`);
         logout();
+        toast.success("User deleted successfully!");
         navigate("/");
       } catch (err) {
         console.log(err);
@@ -65,6 +68,7 @@ export const UserInfo = () => {
 
   return (
     <>
+      <ToastContainer />
       <div className="bg-gray-800">
         <div className="max-w-6xl mx-auto flex flex-col gap-5 sm:gap-8 text-white p-8">
           <div className="border-4 w-max h-max p-0 rounded-full border-slate-100">
@@ -136,7 +140,7 @@ export const UserInfo = () => {
                       <div className="flex gap-3 sm:gap-5 flex-col sm:flex-row">
                         <img
                           src={`/upload/${post?.img}`}
-                          className="rounded object-cover w-full h-36"
+                          className="rounded object-cover min-w-[200px] w-full h-36"
                           alt=""
                         />
                         <div className="text-left">

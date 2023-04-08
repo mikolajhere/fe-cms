@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 interface FileProp {
   file?: File | null;
@@ -19,15 +20,17 @@ export const User = () => {
   const upload = async () => {
     try {
       const formData = new FormData();
-      formData.append("file", file as string);
-      const res = await axios.post("/upload", formData);
+      if (file) {
+        formData.append("file", file as string);
+      }
+      const res = await axios.post("/api/upload", formData);
       return res.data;
     } catch (err: any) {
       console.log(err);
       setError(err.response.data);
     }
   };
-  let currentId = window.location.href.slice(32);
+  let currentId = window.location.href.slice(48);
 
   const handleSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -35,19 +38,18 @@ export const User = () => {
 
     try {
       state &&
-        (await axios.put(`/users/${currentId}`, {
+        (await axios.put(`/api/users/${currentId}`, {
           username,
           bio,
           img: file ? imgUrl : "",
         }));
       navigate(`/user/${currentId}`);
+      toast.success("User info saved successfully!");
     } catch (err: any) {
       setError(err.response.data);
     }
   };
-
-  console.log(state);
-
+ 
   return (
     <div className="max-w-xl mx-auto px-4 text-left mt-4 min-h-screen">
       <div className="mb-6">

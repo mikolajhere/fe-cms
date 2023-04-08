@@ -3,20 +3,22 @@ import { Link, useLocation } from "react-router-dom";
 import { PropsSingle } from "./Single";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Navigation, Autoplay } from "swiper";
+import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import moment from "moment";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
+import "react-toastify/dist/ReactToastify.css";
 
-const Home = () => {
+export const Home = () => {
   const [posts, setPosts] = useState([]);
   const cat = useLocation().search;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/posts${cat}`);
+        const res = await axios.get(`/api/posts${cat}`);
         setPosts(res.data);
       } catch (err) {
         console.log(err);
@@ -48,6 +50,7 @@ const Home = () => {
 
   return (
     <section className="flex flex-col bg-white pb-10 text-3xl md:text-4xl min-h-screen">
+      <ToastContainer />
       <Swiper
         className="w-full"
         modules={[Navigation, A11y, Autoplay]}
@@ -60,7 +63,8 @@ const Home = () => {
         navigation
         scrollbar={{ draggable: true }}
       >
-        {posts.length >= 3 &&
+        {posts &&
+          posts.length >= 3 &&
           posts.map((post: PropsSingle) => (
             <SwiperSlide key={post.id}>
               <div
@@ -79,9 +83,9 @@ const Home = () => {
                   {moment(post?.date).format("MMMM DD, YYYY")}
                 </span>
                 <Link to={`/post/${post.id}`}>
-                  <h2 className="text-xl px-12 sm:text-3xl sm:px-5 lg:text-5xl text-center font-bold drop-shadow-[0_3px_1px_rgba(0,0,0,0.4)] max-w-lg text-white">
+                  <h1 className="text-xl px-12 sm:text-3xl sm:px-5 lg:text-5xl text-center font-bold drop-shadow-[0_3px_1px_rgba(0,0,0,0.4)] max-w-lg text-white hover:text-slate-200">
                     {post.title}
-                  </h2>
+                  </h1>
                 </Link>
               </div>
             </SwiperSlide>
@@ -89,13 +93,13 @@ const Home = () => {
       </Swiper>
 
       {cat && cat !== "" ? (
-        <h1 className="my-5 text-3xl sm:text-4xl tracking-tight text-slate-900 font-extrabold text-center px-4">
+        <h2 className="my-5 text-3xl sm:text-4xl tracking-tight text-slate-900 font-extrabold text-center px-4">
           {posts?.length && cat !== "" ? (
             <>Posts in {cat.slice(5)} category</>
           ) : (
             <>There are no posts in the {cat.slice(5)} category yet.</>
           )}
-        </h1>
+        </h2>
       ) : (
         <h2 className="my-5 text-3xl sm:text-4xl tracking-tight text-slate-900 font-extrabold text-center px-4">
           All posts
@@ -113,7 +117,7 @@ const Home = () => {
                   <div className="flex gap-3 sm:gap-5 flex-col sm:flex-row">
                     <img
                       src={`/upload/${post?.img}`}
-                      className="rounded object-cover w-full h-36"
+                      className="rounded object-cover min-w-[200px] w-full h-36"
                       alt=""
                     />
                     <div className="text-left">
@@ -142,5 +146,3 @@ const Home = () => {
     </section>
   );
 };
-
-export default Home;

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { PropsSingle } from "../pages/Single";
 import { Link, useLocation } from "react-router-dom";
-import axios from "axios";
 
 export const Sidebar = ({ bio }: Partial<PropsSingle>) => {
   const [post, setPost] = useState<PropsSingle>();
@@ -10,15 +9,21 @@ export const Sidebar = ({ bio }: Partial<PropsSingle>) => {
   const postId = location.pathname.split("/")[2];
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getData = async () => {
       try {
-        const res = await axios.get(`/posts/${postId}`);
-        setPost(res.data);
-      } catch (err) {
+        const response = await fetch(`/api/posts/${postId}`);
+        if (!response.ok) {
+          throw new Error(
+            `This is an HTTP error: The status is ${response.status}`
+          );
+        }
+        let actualData = await response.json();
+        setPost(actualData);
+      } catch (err: any) {
         console.log(err);
       }
     };
-    fetchData();
+    getData();
   }, [bio, postId]);
 
   return (
@@ -42,7 +47,7 @@ export const Sidebar = ({ bio }: Partial<PropsSingle>) => {
             )}
           </Link>
           <h4 className="uppercase tracking-wide py-3">About the author</h4>
-          <p>{post?.bio.slice(0, 70)}...</p>
+          <p>{post?.bio?.slice(0, 70)}...</p>
           <Link
             className="flex text-sm text-sky-500 font-medium"
             to={`/user/${post?.uid}`}

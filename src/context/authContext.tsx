@@ -28,12 +28,12 @@ export const AuthContextProvider: React.FC<PropsWithChildren> = ({
   );
 
   const login = async (inputs: Object) => {
-    const res = await axios.post("/auth/login", inputs);
+    const res = await axios.post("/api/auth/login", inputs);
     setCurrentUser(res.data);
   };
 
   const logout = async () => {
-    await axios.post("/auth/logout");
+    await axios.post("/api/auth/logout");
     setCurrentUser(null);
   };
 

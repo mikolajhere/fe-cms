@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Register = () => {
+export const Register = () => {
   const [inputs, setInputs] = useState({
     username: "",
     email: "",
     password: "",
+    // setting default avatar
+    image: "1680548278598].jpg",
   });
   const [err, setError] = useState(null);
 
@@ -20,7 +22,9 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      await axios.post("/auth/register", inputs);
+      const res = await axios.post("/api/auth/register", inputs);
+      console.log(res);
+
       navigate("/login");
     } catch (err: any) {
       setError(err.response.data);
@@ -104,5 +108,3 @@ const Register = () => {
     </>
   );
 };
-
-export default Register;

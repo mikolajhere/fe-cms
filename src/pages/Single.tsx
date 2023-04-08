@@ -5,9 +5,9 @@ import axios from "axios";
 import moment from "moment";
 import { AuthContext } from "../context/authContext";
 import DOMPurify from "dompurify";
-import { HomeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import Menu from "../components/Menu";
+import { HomeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline"; 
 import { Sidebar } from "../components/Sidebar";
+import { Menu } from "../components/Menu";
 
 export interface PropsSingle {
   title: string;
@@ -34,7 +34,7 @@ const Single = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/posts/${postId}`);
+        const res = await axios.get(`/api/posts/${postId}`);
         setPost(res.data);
       } catch (err) {
         console.log(err);
@@ -47,7 +47,7 @@ const Single = () => {
     let text = "Are you sure you want to delete this post?";
     if (confirm(text) === true) {
       try {
-        await axios.delete(`/posts/${postId}`);
+        await axios.delete(`/api/posts/${postId}`);
         navigate("/");
       } catch (err) {
         console.log(err);
@@ -73,7 +73,7 @@ const Single = () => {
                 className="flex items-center gap-1 hover:text-violet-700"
                 to={`/?cat=${post?.cat}`}
               >
-                {`${post?.cat.charAt(0).toUpperCase()}${post?.cat.slice(1)}`}
+                {`${post?.cat?.charAt(0).toUpperCase()}${post?.cat?.slice(1)}`}
                 {" / "}
               </Link>
               {post?.title}
