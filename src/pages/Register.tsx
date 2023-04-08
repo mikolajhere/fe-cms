@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const Register = () => {
   const [inputs, setInputs] = useState({
@@ -24,7 +25,7 @@ export const Register = () => {
     try {
       const res = await axios.post("/api/auth/register", inputs);
       console.log(res);
-
+      toast.success("User created!");
       navigate("/login");
     } catch (err: any) {
       setError(err.response.data);

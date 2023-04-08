@@ -66,6 +66,8 @@ export const UserInfo = () => {
     }
   };
 
+  console.log({ posts });
+
   return (
     <>
       <ToastContainer />

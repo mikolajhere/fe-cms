@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
+import { toast } from "react-toastify";
 
 interface Props {
   username: string;
@@ -26,7 +27,8 @@ export const Login = () => {
   const handleSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     try {
-      await login(inputs);
+      await login(inputs); 
+      toast.success("You have successfully logged in!");
       navigate("/");
     } catch (err: any) {
       setError(err.response.data);
@@ -38,9 +40,7 @@ export const Login = () => {
         <h1 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
           Login
         </h1>
-        <form 
-          className="flex flex-col gap-4 bg-white shadow my-8 p-8 sm:px-16 rounded max-w-md w-full"
-        >
+        <form className="flex flex-col gap-4 bg-white shadow my-8 p-8 sm:px-16 rounded max-w-md w-full">
           <div>
             <label
               className="block text-sm font-medium text-slate-700 mb-2"
@@ -92,4 +92,3 @@ export const Login = () => {
     </>
   );
 };
- 

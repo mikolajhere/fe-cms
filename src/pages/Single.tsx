@@ -8,6 +8,7 @@ import DOMPurify from "dompurify";
 import { HomeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline"; 
 import { Sidebar } from "../components/Sidebar";
 import { Menu } from "../components/Menu";
+import { toast } from "react-toastify";
 
 export interface PropsSingle {
   title: string;
@@ -48,6 +49,7 @@ const Single = () => {
     if (confirm(text) === true) {
       try {
         await axios.delete(`/api/posts/${postId}`);
+        toast.success("Post deleted successfully!");
         navigate("/");
       } catch (err) {
         console.log(err);
@@ -57,7 +59,7 @@ const Single = () => {
 
   return (
     <>
-      <div className="grid md:grid-cols-3 max-w-6xl mx-auto">
+      <div className="grid md:grid-cols-3 max-w-6xl mx-auto min-h-screen">
         <div className="mx-auto pb-28 px-4 gap-5 md:flex-row col-span-3 md:col-span-2">
           <article className="flex-auto">
             <div className="hidden lg:flex breadcrumb items-center gap-1 text-sm text-gray-500 mt-3">

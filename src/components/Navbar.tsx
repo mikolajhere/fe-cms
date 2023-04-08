@@ -10,6 +10,7 @@ import {
   UserIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { toast } from "react-toastify";
 
 export const navigation = [
   { name: "Art", href: "/?cat=art", current: false },
@@ -30,7 +31,8 @@ export const Navbar = () => {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    logout();
+    logout(); 
+    toast.success("You logged out successfully!");
     navigate("/");
   };
 

@@ -9,8 +9,7 @@ import { Home } from "./pages/Home";
 import { Write } from "./pages/Write";
 import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
-import { Footer } from "./components/Footer";
-import { ToastContainer } from "react-toastify";
+import { Footer } from "./components/Footer"; 
 
 const Layout = () => {
   return (
