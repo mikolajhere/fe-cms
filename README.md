@@ -34,5 +34,6 @@ npm start
 
 ## Demo
 
-![](https://mikolajhere.networkmanager.pl/static/gif/demo.gif)
+![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+
 
