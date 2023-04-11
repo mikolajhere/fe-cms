@@ -34,4 +34,12 @@ npm start
 
 ## Demo
 
-![Alt Text](https://mikolajhere.networkmanager.pl/static/gif/demo.gif)
+<iframe
+    width="640"
+    height="480"
+    src="https://youtu.be/cBIIHS5PNzA"
+    frameborder="0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+>
+</iframe>
