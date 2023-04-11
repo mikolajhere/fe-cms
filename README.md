@@ -34,4 +34,5 @@ npm start
 
 ## Demo
 
-![demo](https://mikolajhere.networkmanager.pl/static/gif/demo.gif)
+<img src="https://mikolajhere.networkmanager.pl/static/gif/demo.gif" />
+
