@@ -34,5 +34,4 @@ npm start
 
 ## Demo
 
-
-<iframe width="330" height="207"  src="https://www.youtube.com/embed/cBIIHS5PNzA" title="Frontend CMS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[![IMAGE_ALT](https://img.youtube.com/vi/cBIIHS5PNzA/0.jpg)](https://www.youtube.com/embed/cBIIHS5PNzA)
