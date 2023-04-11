@@ -34,5 +34,5 @@ npm start
 
 ## Demo
 
-<img src="https://mikolajhere.networkmanager.pl/static/gif/demo.gif" />
+![](https://mikolajhere.networkmanager.pl/static/gif/demo.gif)
 
